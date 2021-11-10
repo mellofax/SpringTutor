@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+    <h3 align="center">Registration</h3>
+    <div class="container" align="center">
+        Name:<br/>
+        <input type="text" name="name" placeholder="Your name ..."><br/>
+        Login:<br/>
+        <input type="text" name="login" placeholder="login"><br/>
+        Password:<br/>
+        <input type="password" name="password" placeholder="password"><br/>
+        Repeat password:<br/>
+        <input type="password" name="reppass" placeholder="repeat your password"><br/>
+        <form>
+            <input type="submit" value="Register" size="4"/>
+        </form>
+        <form th:action="@{/}">
+            <input type="submit" value="Back" size="4"/>
+        </form>
+    </div>
+</body>
+</html>
