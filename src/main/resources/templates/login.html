@@ -7,13 +7,13 @@
 <body>
     <h3 align="center">Welcome</h3>
     <div class="container" align="center">
-        Login:<br/>
-        <input type="text" name="login" placeholder="login"><br/>
-        Password:<br/>
-        <input type="password" name="password" placeholder="password">
-            <form>
+        <form th:action="@{/login}" method="get">
+            Login:<br/>
+            <input type="text" name="login" placeholder="login"><br/>
+            Password:<br/>
+            <input type="password" name="password" placeholder="password"><br/>
                 <input type="submit" value="Log in" size="4"/>
-            </form>
+        </form>
             <form th:action="@{/registration}">
                 <input type="submit" value="Register" size="4"/>
             </form>
