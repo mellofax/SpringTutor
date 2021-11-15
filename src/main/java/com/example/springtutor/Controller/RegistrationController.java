@@ -1,11 +1,10 @@
 package com.example.springtutor.Controller;
 
-import com.example.springtutor.Entity.UserDB;
+import com.example.springtutor.Entity.User;
 import com.example.springtutor.Forms.UserForm;
 import com.example.springtutor.Repository.UserRepository;
 import com.example.springtutor.logger.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,22 +31,19 @@ public class RegistrationController {
     }
 
     @PostMapping(value = {"/newuser"})
-    public ModelAndView saveDiscipline(Model model, @ModelAttribute("userform") UserForm userForm) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+    public String saveDiscipline(Model model, @ModelAttribute("userform") UserForm userForm) {
         try {
-            String name = userForm.getName();
+            String email = userForm.getEmail();
             String login = userForm.getLogin();
             String password = userForm.getPassword();
-            String reppass = userForm.getReppass();
-            UserDB user = new UserDB(name, login, password);
+            User user = new User(email, login, password, false);
             userRepository.save(user);
             Log.getLogger().info("Registration is successfully!");
-            return modelAndView;
+            return "redirect:/";
         }catch (Exception e){
             model.addAttribute("errorMessage", getError(e.getMessage()));
-            modelAndView.setViewName("registration");
-            return modelAndView;
+            return "registration";
         }
     }
+
 }

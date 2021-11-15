@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserForm {
-    private String email;
-    private String login;
-    private String password;
-    private boolean isAdmin;
+public class TutorForm {
+    private String name;
+    private int rating;
+    private UserForm owner;
 }

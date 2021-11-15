@@ -1,0 +1,48 @@
+.B_inner .formTable__row .btn {
+    max-width: 308px;
+}
+.b-migration-wrap .btn--block {
+    width: 100%;
+}
+.b-migration-wrap .btn--success {
+    background: #3bb3bd;
+    color: #fff;
+    border-color: #3bb3bd;
+}
+button, input[type=button], input[type=reset], input[type=submit] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+button, input, select, textarea, label, .h1_right {
+	margin-top: 5px;
+	margin-left: 50px;
+    width: 300px;
+    font-size: 100%;
+    vertical-align: middle;
+    font-family: Arial BLack;
+}
+.b-migration-wrap .btn--l.btn--block {
+    padding: 15px;
+}
+.Block--login {
+	border-radius: 50px;
+	margin-top: 120px;
+	background-color: white;
+	border-color : gray;
+	border-style: solid;
+	width: 400px;
+	height:370px;
+	margin-left: 720px;
+	padding-top: 50px;
+}
+.B_inner__login {
+	margin-left: 150px;
+	font-family: Arial Black;
+}
+.B_inner__registration {
+	margin-left: 100px;
+	font-family: Arial Black;
+}
+body{
+	background-color: #edeff0;
+}
