@@ -1,21 +1,18 @@
 package com.example.springtutor.Controller;
 
+import com.example.springtutor.DTO.UserDto;
 import com.example.springtutor.Entity.User;
-import com.example.springtutor.Forms.UserForm;
 import com.example.springtutor.Repository.UserRepository;
-import com.example.springtutor.logger.Log;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.example.springtutor.logger.Errors.getError;
+import static com.example.springtutor.service.Errors.getError;
 
-@Controller
+@Tag(name = "Регистрация", description = "Контролирует регистрацию пользователей")
+@RestController
 @RequestMapping(value = "/registration")
 public class RegistrationController {
 
@@ -24,26 +21,34 @@ public class RegistrationController {
 
     @GetMapping(value = {"/registration"})
     public ModelAndView showAddDisciplinePage(Model model) {
-        ModelAndView modelAndView = new ModelAndView("registration");
-        UserForm userForm = new UserForm();
-        model.addAttribute("userform", userForm);
-        return modelAndView;
+        UserDto userDto = new UserDto();
+        model.addAttribute("userdto", userDto);
+        return new ModelAndView("registration");
     }
 
     @PostMapping(value = {"/newuser"})
-    public String saveDiscipline(Model model, @ModelAttribute("userform") UserForm userForm) {
+    public ModelAndView saveDiscipline(Model model,@ModelAttribute("userdto") UserDto userDto) {
         try {
-            String email = userForm.getEmail();
-            String login = userForm.getLogin();
-            String password = userForm.getPassword();
-            User user = new User(email, login, password, false);
+            String email = userDto.getEmail();
+            String login = userDto.getLogin();
+            String password = userDto.getPassword();
+            if(!checkUser(login, email))
+                throw new Exception("User Exist");
+            User user = new User(email, login, password);
             userRepository.save(user);
-            Log.getLogger().info("Registration is successfully!");
-            return "redirect:/";
+            return new ModelAndView("redirect:/");
         }catch (Exception e){
+            System.out.println(getError(e.getMessage()));
             model.addAttribute("errorMessage", getError(e.getMessage()));
-            return "registration";
+            return new ModelAndView("registration");
         }
+    }
+    private boolean checkUser(String login, String email){
+        User LoginFromDb =userRepository.findByLogin(login);
+        User EmailFromDb =userRepository.findByEmail(email);
+        if(LoginFromDb!= null || EmailFromDb != null)
+            return false;
+        else return true;
     }
 
 }

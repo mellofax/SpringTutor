@@ -1,5 +1,7 @@
 package com.example.springtutor.Entity;
 
+import com.example.springtutor.service.Validator.Name.Name;
+import com.example.springtutor.service.Validator.Rating.Rating;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ public class Tutor {
     private long id;
 
     @Column
+    @Name
     private String name;
 
 
@@ -24,6 +27,7 @@ public class Tutor {
     private User owner;
 
     @Column
+    @Rating
     private int rating;
 
 

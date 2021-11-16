@@ -1,5 +1,8 @@
 package com.example.springtutor.Entity;
 
+import com.example.springtutor.service.Validator.Description.Description;
+import com.example.springtutor.service.Validator.Name.Name;
+import com.example.springtutor.service.Validator.Price.Price;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +10,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,14 +26,15 @@ public class Record {
     private long id;
 
     @Column
-    @Size(min = 4, max = 32, message = "Record name must contain from from 4 to 32 symbols")
+    @Name
     private String name;
 
     @Column
-    @Size(min = 4, max = 32, message = "Record description must contain from 4 to 32 symbols")
+    @Description
     private String description;
 
     @Column
+    @Price
     private int price;
 
     @Column

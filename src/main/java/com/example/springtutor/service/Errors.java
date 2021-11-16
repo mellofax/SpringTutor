@@ -1,4 +1,4 @@
-package com.example.springtutor.logger;
+package com.example.springtutor.service;
 
 public class Errors {
     public static String getError(String message){

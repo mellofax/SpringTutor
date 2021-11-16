@@ -1,13 +1,15 @@
 package com.example.springtutor.Entity;
 
+import com.example.springtutor.service.Validator.Login.Login;
+import com.example.springtutor.service.Validator.Password.Password;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,23 +24,18 @@ public class User {
     private long id;
 
     @Column
-    @Size(min = 4, max = 32, message = "User email must contain from 6 to 32 symbols")
-    @NotNull(message = "Cannot be null")
+    @Email(message = "Incorrect mail format")
+    @NotBlank(message = "Cannot be null")
     private String email;
 
     @Column
-    @Size(min = 4, max = 20,message = "User login must contain from from 4 to 32 symbols")
-    @NotNull(message = "Cannot be null")
+    @Login
     private String login;
 
     @Column
-    @Size(min=8, max = 32, message="User password must contain from 8 to 32 symbols")
-    @NotNull(message = "Cannot be null")
+    @Password
     private String password;
 
-    @Column
-    @NotNull(message = "Cannot be null")
-    private boolean isAdmin;
 
     @JsonIgnore
     @OneToMany(mappedBy = "owner", targetEntity = Tutor.class)
@@ -47,10 +44,9 @@ public class User {
     public User(){
     }
 
-    public User(String email, String login, String password, boolean isAdmin) {
+    public User(String email, String login, String password) {
         this.email = email;
         this.login = login;
         this.password = password;
-        this.isAdmin = isAdmin;
     }
 }
