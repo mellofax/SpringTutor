@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public List<User> findAll() throws ServiceException {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -84,23 +84,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(long id) throws ServiceException {
+    public User findById(long id) {
         return userRepository.getById(id);
     }
 
 
-    public boolean activateUser(String code) throws ServiceException {
+    public void activateUser(String code) throws ServiceException {
         try {
             User user = userRepository.findByActivationCode(code);
-
-            if (user == null) {
-                return false;
+            if (user != null) {
+                user.setActivationCode(null);
+                user.setActive(true);
+                userRepository.save(user);
             }
-            user.setActivationCode(null);
-            user.setActive(true);
-            userRepository.save(user);
-
-            return true;
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

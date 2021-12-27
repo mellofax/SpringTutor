@@ -4,11 +4,8 @@ import com.example.springtutor.bean.dto.Role;
 import lombok.Data;
 
 @Data
-
 public class AuthResponse {
-
     private String token;
-
     private Role role;
 
     public AuthResponse(String token, Role role) {

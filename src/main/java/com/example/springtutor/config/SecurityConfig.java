@@ -20,9 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -31,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/admin/*","/getUser/*").hasRole("ADMIN")
                 .antMatchers("/user/*").hasRole("USER")
-                .antMatchers("/register", "/login","/getUser/*","/activate/*").permitAll()
+                .antMatchers("/register", "/login","/activate/*").permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -43,11 +40,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-   /* @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
-        return daoAuthenticationProvider;
-    }*/
 }

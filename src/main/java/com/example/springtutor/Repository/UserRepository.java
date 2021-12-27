@@ -14,7 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByLogin(String login)throws RepositoryException;
     List<User> findAll();
     boolean existsUserByLogin(String login)throws RepositoryException;
-    boolean existsUserByLoginAndPassword(String login, String password)throws RepositoryException;
     User getById(Long id);
 
     User findByActivationCode(String code)throws RepositoryException;

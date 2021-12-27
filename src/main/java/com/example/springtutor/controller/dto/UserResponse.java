@@ -2,10 +2,17 @@ package com.example.springtutor.controller.dto;
 
 
 import com.example.springtutor.bean.dto.Role;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
+@Data
+@Schema(description = "Получить всех пользователей")
 public class UserResponse {
+    @Schema(description = "Идентификатор", example = "4")
     private Long id;
+    @Schema(description = "Логин", example = "MixailFors")
     private String login;
+    @Schema(description = "Полномочия", example = "ROLE_USER")
     private Role role;
 
     public UserResponse(Long id, String login, Role role) {

@@ -8,13 +8,15 @@ import com.example.springtutor.exception.ControllerException;
 import com.example.springtutor.exception.ServiceException;
 import com.example.springtutor.repository.UserProjectRepository;
 import com.example.springtutor.service.UserProjectService;
-import org.apache.log4j.Logger;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@Slf4j
+@Tag(name = "Пользователь", description = "Контролирует запросы пользователя")
 @RestController
 public class UserProjectRestController
 {
@@ -23,8 +25,6 @@ public class UserProjectRestController
 
     @Autowired
     private UserProjectRepository userProjectRepository;
-
-    private static final Logger logger = Logger.getLogger(MainController.class);
 
 
     @PostMapping("/user/createUserProject")
@@ -38,7 +38,7 @@ public class UserProjectRestController
         }
         catch (ServiceException e)
         {
-            logger.error("createUserProject");
+            log.error("[UserProjectRestController] createUserProject");
             throw new ControllerException(e);
         }
     }
@@ -52,7 +52,7 @@ public class UserProjectRestController
             }
             return new ResponseEntity<>(HttpStatus.FOUND);
         } catch (ServiceException e) {
-            logger.error("isSubscribed");
+            log.error("[UserProjectRestController] isSubscribed");
             throw new ControllerException(e);
         }
     }
@@ -66,7 +66,7 @@ public class UserProjectRestController
             }
             return new ResponseEntity<>(HttpStatus.FOUND);
         } catch (ServiceException e) {
-            logger.error("isUserProjectExistByProjectId");
+            log.error("[UserProjectRestController] isUserProjectExistByProjectId");
             throw new ControllerException(e);
         }
     }
@@ -77,7 +77,7 @@ public class UserProjectRestController
         try {
             return new ResponseEntity<>(userProjectService.getAllByUserLogin(data), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("getUserProductListByUserName");
+            log.error("[UserProjectRestController] getUserProductListByUserName");
             throw new ControllerException(e);
         }
     }
@@ -89,7 +89,7 @@ public class UserProjectRestController
         try {
             return new ResponseEntity<>(userProjectService.getAll(), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("getAllUserProduct");
+            log.error("[UserProjectRestController] getAllUserProduct");
             throw new ControllerException(e);
         }
     }
@@ -102,10 +102,8 @@ public class UserProjectRestController
             userProjectService.setUserProjectById(request.getId(), request.isDenide(), request.isSet());
             return new ResponseEntity<>(userProjectRepository.getById(request.getId()), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("updateUserProduct");
+            log.error("[UserProjectRestController] updateUserProduct");
             throw new ControllerException(e);
         }
     }
-
-
 }

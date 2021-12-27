@@ -8,7 +8,8 @@ import com.example.springtutor.exception.ControllerException;
 import com.example.springtutor.exception.ServiceException;
 import com.example.springtutor.service.ProjectService;
 import com.example.springtutor.validator.ProjectValidator;
-import org.apache.log4j.Logger;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
+@Tag(name = "Админ", description = "Контролирует запросы админа")
 @RestController
 public class ProjectRestController
 {
@@ -25,7 +28,6 @@ public class ProjectRestController
     @Autowired
     private ProjectValidator projectValidator;
 
-    private static final Logger logger = Logger.getLogger(MainController.class);
 
     @PostMapping("/admin/isProjectExist")
     public ResponseEntity<?> isProjectExist(@RequestBody NameRequest nameRequest) throws ControllerException {
@@ -35,7 +37,7 @@ public class ProjectRestController
             }
             return new ResponseEntity<>(HttpStatus.FOUND);
         } catch (ServiceException e) {
-            logger.error("isProjectExist");
+            log.error("[ProjectRestController] isProjectExist");
             throw new ControllerException(e);
         }
     }
@@ -50,7 +52,7 @@ public class ProjectRestController
         }
         catch (ServiceException e)
         {
-            logger.error("deleteProjectByName");
+            log.error("[ProjectRestController] deleteProjectByName");
             throw new ControllerException(e);
         }
     }
@@ -69,12 +71,12 @@ public class ProjectRestController
                 if (!bindingResult.hasErrors())
                 {
                     projectService.create(project);
-                    logger.debug("created project");
+                    log.debug("[ProjectRestController] created project");
                     return new ResponseEntity<>(project, HttpStatus.OK);
                 }
                 else
                 {
-                    logger.error("project wasn't validated");
+                    log.error("[ProjectRestController] project wasn't validated");
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
                 }
@@ -83,7 +85,7 @@ public class ProjectRestController
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } catch (ServiceException e) {
-            logger.error("isProjectExist");
+            log.error("[ProjectRestController] isProjectExist");
             throw new ControllerException(e);
         }
     }
@@ -103,7 +105,7 @@ public class ProjectRestController
         }
         catch (ServiceException e)
         {
-            logger.error("updateProduct");
+            log.error("[ProjectRestController] updateProduct");
 
             throw new ControllerException(e);
         }
@@ -115,7 +117,7 @@ public class ProjectRestController
         try {
             return new ResponseEntity<>(projectService.getByName(data), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("getProductByName");
+            log.error("[ProjectRestController] getProductByName");
 
             throw new ControllerException(e);
         }
@@ -127,7 +129,7 @@ public class ProjectRestController
         try {
             return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("getAllProjectsAdmin");
+            log.error("[ProjectRestController] getAllProjectsAdmin");
 
             throw new ControllerException(e);
         }
@@ -139,7 +141,7 @@ public class ProjectRestController
         try {
             return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
         } catch (ServiceException e) {
-            logger.error("getAllProjectsUser");
+            log.error("[ProjectRestController] getAllProjectsUser");
 
             throw new ControllerException(e);
         }
